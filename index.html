@@ -3,40 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Palm Line Counter 🔮</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <title>Palm Line Counter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, violet, crimson);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 20px;
+    }
+
+    .upload-section {
+      margin: 20px 0;
+    }
+
+    .image-container {
+      position: relative;
+      width: 300px;
+      height: auto;
+      margin-bottom: 30px;
+      border: 3px dashed #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+      animation: scan 2s infinite linear;
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .result-section {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+      max-width: 500px;
+    }
+
+    .btn {
+      background-color: #fff;
+      color: crimson;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background-color: #f0f0f0;
+    }
+
+    input[type="file"] {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔮 Palm Line Counter</h1>
-    <p class="subtitle">Scan your palm. Receive your destiny. Kind of.</p>
 
-    <input type="file" accept="image/*" id="imageInput" />
-    <div class="image-preview" id="imagePreview">
-      <div class="scan-line"></div>
-      <img id="uploadedImage" alt="Palm Preview"/>
-    </div>
+  <h1>Palm Line Counter 🔮</h1>
+  <p>Scan your palm to unlock hilariously useless insights.</p>
 
-    <button onclick="analyzePalm()">Analyze Palm</button>
-
-    <div class="result">
-      <p id="lineCountText"></p>
-      <p id="fortuneText"></p>
-      <p id="funFact"></p>
-      <button onclick="downloadCertificate()">📜 Download Certificate</button>
-    </div>
-
-    <div id="certificate" class="hidden certificate">
-      <h2>🎓 Useless Palmistry Certificate 🎓</h2>
-      <p id="certName"></p>
-      <p id="certLines"></p>
-      <p id="certFortune"></p>
-      <p id="certFact"></p>
-      <p class="cert-footer">This certificate is 100% nonsense. Enjoy.</p>
-    </div>
+  <div class="upload-section">
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" id="imageUpload" accept="image/*" required />
+      <button class="btn" type="submit">Upload & Analyze</button>
+    </form>
   </div>
 
-  <script src="script.js"></script>
+  <div class="image-container" id="imagePreviewContainer" style="display: none;">
+    <div class="scanner"></div>
+    <img id="previewImage" src="" alt="Palm Image">
+  </div>
+
+  <div class="result-section" id="results" style="display: none;">
+    <h2>Analysis Report 🧠</h2>
+    <ul>
+      <li>🖐️ Number of visible palm lines: <span id="lineCount">52</span> lines</li>
+      <li>🔮 Your fate line predicts 3 sudden food cravings this week.</li>
+      <li>💼 Career line suggests you're destined to forget your passwords often.</li>
+      <li>❤️ Love line indicates you’ll fall in love with your own code someday.</li>
+      <li>🪄 Mysterious curve near thumb = hidden superpower: finding lost TV remotes.</li>
+    </ul>
+    <button class="btn" onclick="downloadCertificate()">Download Certificate</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    const form = document.getElementById('uploadForm');
+    const imageUpload = document.getElementById('imageUpload');
+    const previewImage = document.getElementById('previewImage');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const results = document.getElementById('results');
+    const lineCount = document.getElementById('lineCount');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const file = imageUpload.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          previewImage.src = event.target.result;
+          imagePreviewContainer.style.display = 'block';
+          results.style.display = 'block';
+
+          // Simulate line detection (fun & fixed for demo)
+          const detectedLines = Math.floor(50 + Math.random() * 10); // 50 to 60
+          lineCount.textContent = detectedLines;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function downloadCertificate() {
+      html2canvas(results).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'palm_analysis_certificate.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    }
+  </script>
 </body>
 </html>
