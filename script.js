@@ -1,50 +1,46 @@
+const lineCountText = document.getElementById("lineCountText");
+const fortuneText = document.getElementById("fortuneText");
+
 const fortunes = [
-  "You're destined to find ₹10 in your old jeans.",
-  "The universe will reward your laziness... eventually.",
-  "Your future includes a lot of scrolling.",
-  "Greatness awaits... after this nap.",
-  "One of your palm lines is a loading bar. Stay tuned."
+  "Your future is... probably fine.",
+  "You will soon eat something amazing.",
+  "Fortune favors the palm reader!",
+  "Beware of cats and spaghetti.",
+  "Your left sock will bring you luck.",
+  "Soon, you will laugh at something dumb.",
+  "A meme will change your mood today."
 ];
 
 const funFacts = [
-  "Palm lines have no actual connection to the future.",
-  "Fortune-telling is 20% skill, 80% dramatic pause.",
-  "You just scanned your hand for fun. Congrats!",
-  "Some frogs have more accurate fortunes than this app.",
-  "Palmistry dates back to 3000 BCE — still useless!"
+  "Your palm has over 27 bones!",
+  "Left-handed people have slightly different palm lines.",
+  "Some believe palm lines change every 7 years.",
+  "Palmistry dates back to ancient India and China.",
+  "In palmistry, the heart line reveals emotional depth.",
+  "No two palms are the same — like fingerprints!",
+  "Some claim deeper lines mean a more 'eventful' life.",
+  "More palm lines ≠ more wisdom... or maybe it does?",
+  "Even AI doesn’t really know what it’s doing here!",
+  "Your palm just became famous in a useless project!"
 ];
 
-function previewImage(event) {
-  const reader = new FileReader();
-  reader.onload = function() {
-    const image = document.getElementById('uploadedImage');
-    image.src = reader.result;
-    image.classList.remove("hidden");
+document.getElementById("imageInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-    // Restart scan animation
-    const scanLine = document.querySelector('.scan-line');
-    scanLine.style.animation = "none";
-    void scanLine.offsetWidth; // trigger reflow
-    scanLine.style.animation = null;
-
-    // Wait 3 seconds to simulate "scanning"
-    setTimeout(() => {
-      analyzePalm();
-    }, 3000);
-  }
-  reader.readAsDataURL(event.target.files[0]);
-}
+  const img = document.getElementById("uploadedImage");
+  img.src = URL.createObjectURL(file);
+  img.style.display = "block";
+});
 
 function analyzePalm() {
-  const lines = Math.floor(Math.random() * 10) + 3;
-  const fortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-  const fact = funFacts[Math.floor(Math.random() * funFacts.length)];
+  const randomLines = Math.floor(Math.random() * 15) + 3;
+  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+  const randomFact = funFacts[Math.floor(Math.random() * funFacts.length)];
 
-  document.getElementById("lineCount").innerText = `🖐️ Detected ${lines} major palm lines.`;
-  document.getElementById("fortune").innerText = `🔮 Fortune: ${fortune}`;
-  document.getElementById("funFact").innerText = `🧃 Fun Fact: ${fact}`;
-
-  document.getElementById("results").classList.remove("hidden");
+  lineCountText.innerText = `🖐️ You have ${randomLines} palm lines!`;
+  fortuneText.innerText = `🔮 Fortune: ${randomFortune}`;
+  document.getElementById("funFact").innerText = `📢 Fun Fact: ${randomFact}`;
 }
 
 function downloadCertificate() {
@@ -52,18 +48,18 @@ function downloadCertificate() {
   if (!name) return;
 
   document.getElementById("certName").innerText = `Awarded to: ${name}`;
-  document.getElementById("certLines").innerText = document.getElementById("lineCount").innerText;
-  document.getElementById("certFortune").innerText = document.getElementById("fortune").innerText;
+  document.getElementById("certLines").innerText = lineCountText.innerText;
+  document.getElementById("certFortune").innerText = fortuneText.innerText;
   document.getElementById("certFact").innerText = document.getElementById("funFact").innerText;
 
-  const certificateElement = document.getElementById("certificate");
-  certificateElement.classList.remove("hidden");
+  const certificate = document.getElementById("certificate");
+  certificate.classList.remove("hidden");
 
-  html2canvas(certificateElement).then(canvas => {
+  html2canvas(certificate).then(canvas => {
     const link = document.createElement("a");
     link.download = `${name}_PalmLine_Certificate.png`;
     link.href = canvas.toDataURL();
     link.click();
-    certificateElement.classList.add("hidden");
+    certificate.classList.add("hidden");
   });
 }
