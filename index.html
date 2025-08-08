@@ -51,6 +51,7 @@
       width: 100%;
       background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
       animation: scan 2s infinite linear;
+      display: none;
     }
 
     @keyframes scan {
@@ -112,6 +113,13 @@
     #certificate p {
       font-size: 16px;
     }
+    .random-stats {
+      margin: 20px 0;
+      font-size: 1.1rem;
+      color: #ffd3f4;
+      min-height: 60px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -128,18 +136,20 @@
   </div>
 
   <div class="image-container" id="imagePreviewContainer" style="display: none;">
-    <div class="scanner"></div>
+    <div class="scanner" id="scanner"></div>
     <img id="previewImage" src="" alt="Palm Image">
   </div>
+
+  <div class="random-stats" id="randomStats" style="display:none;"></div>
 
   <div class="result-section" id="results" style="display: none;">
     <h2>Analysis Report 🧠</h2>
     <ul>
       <li>🖐️ Number of visible palm lines: <span id="lineCount">52</span> lines</li>
-      <li>🔮 Your fate line predicts 3 sudden food cravings this week.</li>
-      <li>💼 Career line suggests you're destined to forget your passwords often.</li>
-      <li>❤️ Love line indicates you’ll fall in love with your own code someday.</li>
-      <li>🪄 Mysterious curve near thumb = hidden superpower: finding lost TV remotes.</li>
+      <li id="stat1">🔮 Your fate line predicts 3 sudden food cravings this week.</li>
+      <li id="stat2">💼 Career line suggests you're destined to forget your passwords often.</li>
+      <li id="stat3">❤️ Love line indicates you’ll fall in love with your own code someday.</li>
+      <li id="stat4">🪄 Mysterious curve near thumb = hidden superpower: finding lost TV remotes.</li>
     </ul>
     <button class="btn" onclick="downloadCertificate()">Download Certificate</button>
   </div>
@@ -165,8 +175,90 @@
     const certificate = document.getElementById('certificate');
     const certName = document.getElementById('certName');
     const certLines = document.getElementById('certLines');
+    const scanner = document.getElementById('scanner');
+    const randomStats = document.getElementById('randomStats');
+    const stat1 = document.getElementById('stat1');
+    const stat2 = document.getElementById('stat2');
+    const stat3 = document.getElementById('stat3');
+    const stat4 = document.getElementById('stat4');
 
     let detectedLines = 52;
+
+    // Random stats arrays
+    const statsArr = [
+      "Your palm lines form a secret WiFi password.",
+      "You have the rare 'pizza slice' palm pattern.",
+      "Your palm predicts a nap in your near future.",
+      "You will soon find socks you thought were lost.",
+      "Your palm lines resemble a map to hidden snacks.",
+      "You are destined to win a staring contest with a cat.",
+      "Your palm lines spell out 'debug' in Morse code.",
+      "You will remember a song lyric at the perfect moment.",
+      "Your palm lines suggest you’ll invent a new emoji.",
+      "You will laugh at your own joke today."
+    ];
+
+    const fateArr = [
+      "Your fate line predicts 3 sudden food cravings this week.",
+      "Your fate line predicts a surprise rain dance.",
+      "Your fate line predicts you’ll binge-watch a new show.",
+      "Your fate line predicts you’ll find money in old jeans.",
+      "Your fate line predicts a legendary yawn."
+    ];
+
+    const careerArr = [
+      "Career line suggests you're destined to forget your passwords often.",
+      "Career line suggests you’ll become a coffee connoisseur.",
+      "Career line suggests you’ll master the art of procrastination.",
+      "Career line suggests you’ll invent a new office meme.",
+      "Career line suggests you’ll accidentally reply-all."
+    ];
+
+    const loveArr = [
+      "Love line indicates you’ll fall in love with your own code someday.",
+      "Love line indicates you’ll get a text from your crush (or your mom).",
+      "Love line indicates you’ll have a romantic dinner with pizza.",
+      "Love line indicates you’ll write a love poem to your laptop.",
+      "Love line indicates you’ll get a compliment from a stranger."
+    ];
+
+    const powerArr = [
+      "Mysterious curve near thumb = hidden superpower: finding lost TV remotes.",
+      "Mysterious curve near thumb = hidden superpower: remembering birthdays.",
+      "Mysterious curve near thumb = hidden superpower: detecting cookies nearby.",
+      "Mysterious curve near thumb = hidden superpower: untangling earphones.",
+      "Mysterious curve near thumb = hidden superpower: making perfect popcorn."
+    ];
+
+    function cycleRandomStats(duration = 3000, interval = 600) {
+      randomStats.style.display = "block";
+      let elapsed = 0;
+      let statIndex = 0;
+      const statCount = statsArr.length;
+      randomStats.textContent = statsArr[statIndex];
+
+      const statInterval = setInterval(() => {
+        statIndex = (statIndex + 1) % statCount;
+        randomStats.textContent = statsArr[statIndex];
+        elapsed += interval;
+        if (elapsed >= duration) {
+          clearInterval(statInterval);
+          randomStats.style.display = "none";
+          showFinalResults();
+        }
+      }, interval);
+    }
+
+    function showFinalResults() {
+      scanner.style.display = "none";
+      results.style.display = "block";
+      detectedLines = Math.floor(50 + Math.random() * 50); // Random between 50-99
+      lineCountSpan.textContent = detectedLines;
+      stat1.textContent = "🔮 " + fateArr[Math.floor(Math.random() * fateArr.length)];
+      stat2.textContent = "💼 " + careerArr[Math.floor(Math.random() * careerArr.length)];
+      stat3.textContent = "❤️ " + loveArr[Math.floor(Math.random() * loveArr.length)];
+      stat4.textContent = "🪄 " + powerArr[Math.floor(Math.random() * powerArr.length)];
+    }
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -177,10 +269,9 @@
         reader.onload = function (event) {
           previewImage.src = event.target.result;
           imagePreviewContainer.style.display = 'block';
-          results.style.display = 'block';
-
-          detectedLines = Math.floor(50 + Math.random() * 10); // Random between 50-59
-          lineCountSpan.textContent = detectedLines;
+          results.style.display = 'none';
+          scanner.style.display = 'block';
+          cycleRandomStats(3000, 600); // Show random stats for 3 seconds
         };
         reader.readAsDataURL(file);
       }
