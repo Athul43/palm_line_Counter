@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Palm Line Counter</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -20,8 +21,20 @@
       <h2>📊 Useless Stat Report</h2>
       <p id="lineCount"></p>
       <p id="fortune"></p>
+      <p id="funFact" style="margin-top: 10px;"></p>
       <button onclick="downloadCertificate()">Download Certificate</button>
     </div>
+  </div>
+
+  <!-- Hidden certificate layout -->
+  <div id="certificate" class="hidden" style="width: 500px; margin: 40px auto; padding: 30px; background: #fff; border: 5px double #ff69b4; border-radius: 20px; text-align: center; font-family: 'Georgia', serif; color: #333;">
+    <h2 style="color: #d63384;">🎓 Useless Palmistry Certificate 🎓</h2>
+    <p id="certName" style="font-size: 20px; font-weight: bold; margin-bottom: 10px;"></p>
+    <p id="certLines" style="margin: 8px 0;"></p>
+    <p id="certFortune" style="margin: 8px 0;"></p>
+    <p id="certFact" style="margin: 8px 0;"></p>
+    <p style="margin-top: 20px; font-style: italic; font-size: 13px;">This certificate is completely fake. Do not frame it. Or do.</p>
+    <p style="margin-top: 10px; font-size: 12px; color: #aaa;">— Palm Line Counter™ —</p>
   </div>
 
   <script src="script.js"></script>

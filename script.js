@@ -35,6 +35,18 @@ const palmMoods = [
   "Craving Mangoes"
 ];
 
+const funFacts = [
+  "Your palm contains an ancient Wi-Fi password.",
+  "Your hand once high-fived a ghost.",
+  "These lines reveal your past life as a burrito.",
+  "NASA once used a palm like yours to calculate moon landings.",
+  "Your palm lines form a QR code to nowhere.",
+  "You once shook hands with destiny. It was sweaty.",
+  "Your palm reveals you’re 23% watermelon.",
+  "Your palm lines are a treasure map to your lost motivation.",
+  "This hand may be the chosen one. Or not."
+];
+
 uploadInput.addEventListener("change", function () {
   const file = uploadInput.files[0];
   if (file) {
@@ -64,9 +76,11 @@ analyzeBtn.addEventListener("click", function () {
     const wrinkleIQ = 50 + Math.floor(Math.random() * 51);
     const mood = palmMoods[Math.floor(Math.random() * palmMoods.length)];
     const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    const fact = funFacts[Math.floor(Math.random() * funFacts.length)];
 
     lineCountText.innerText = `You have ${lines} mysterious palm lines.`;
     fortuneText.innerText = `🔮 Fortune: ${randomFortune}`;
+    document.getElementById("funFact").innerText = `🧃 Fun Fact: ${fact}`;
 
     statsDiv.innerHTML = `
       <h3>🤯 Useless Palm Stats:</h3>
@@ -89,23 +103,20 @@ function downloadCertificate() {
   const name = prompt("Enter your name for the certificate:");
   if (!name) return;
 
-  const text = `
-    🖐️ OFFICIAL PALM LINE REPORT 🖐️
+  document.getElementById("certName").innerText = `Awarded to: ${name}`;
+  document.getElementById("certLines").innerText = lineCountText.innerText;
+  document.getElementById("certFortune").innerText = fortuneText.innerText;
+  document.getElementById("certFact").innerText = document.getElementById("funFact").innerText;
 
-    Name: ${name}
-    ${lineCountText.innerText}
-    ${fortuneText.innerText.replace("🔮 Fortune: ", "")}
+  const certificateElement = document.getElementById("certificate");
+  certificateElement.classList.remove("hidden");
 
-    Other useless stats:
-    ${statsDiv.innerText}
+  html2canvas(certificateElement).then(canvas => {
+    const link = document.createElement("a");
+    link.download = `${name}_PalmLine_Certificate.png`;
+    link.href = canvas.toDataURL();
+    link.click();
 
-    Disclaimer: These stats are 100% fake and completely meaningless.
-    Brought to you by: Palm Line Counter™ - Because why not?
-  `;
-
-  const blob = new Blob([text], { type: "text/plain" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `${name}_PalmLineReport.txt`;
-  link.click();
+    certificateElement.classList.add("hidden");
+  });
 }
