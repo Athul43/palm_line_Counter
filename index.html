@@ -4,37 +4,41 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Palm Line Counter</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>🖐️ Palm Line Counter</h1>
-    <p>Upload your palm and get a hilariously useless stat!</p>
+    <h1>Palm Line Counter 🔮</h1>
+    <p>Upload your palm image and get a completely fake fortune!</p>
 
-    <input type="file" id="upload" accept="image/*">
-    <div id="imagePreview"></div>
+    <label class="custom-file-upload">
+      <input type="file" accept="image/*" onchange="previewImage(event)">
+      Upload Palm
+    </label>
 
-    <button id="analyzeBtn">Start Analysis</button>
+    <div id="imageWrapper">
+      <div id="scanner">
+        <div class="scan-line"></div>
+        <img id="uploadedImage" src="" alt="Palm Preview" class="hidden"/>
+      </div>
+    </div>
 
-    <div id="result" class="hidden">
-      <h2>📊 Useless Stat Report</h2>
+    <div id="results" class="hidden">
       <p id="lineCount"></p>
       <p id="fortune"></p>
-      <p id="funFact" style="margin-top: 10px;"></p>
-      <button onclick="downloadCertificate()">Download Certificate</button>
+      <p id="funFact"></p>
+      <button onclick="downloadCertificate()">🎓 Download Certificate</button>
     </div>
-  </div>
 
-  <!-- Hidden certificate layout -->
-  <div id="certificate" class="hidden" style="width: 500px; margin: 40px auto; padding: 30px; background: #fff; border: 5px double #ff69b4; border-radius: 20px; text-align: center; font-family: 'Georgia', serif; color: #333;">
-    <h2 style="color: #d63384;">🎓 Useless Palmistry Certificate 🎓</h2>
-    <p id="certName" style="font-size: 20px; font-weight: bold; margin-bottom: 10px;"></p>
-    <p id="certLines" style="margin: 8px 0;"></p>
-    <p id="certFortune" style="margin: 8px 0;"></p>
-    <p id="certFact" style="margin: 8px 0;"></p>
-    <p style="margin-top: 20px; font-style: italic; font-size: 13px;">This certificate is completely fake. Do not frame it. Or do.</p>
-    <p style="margin-top: 10px; font-size: 12px; color: #aaa;">— Palm Line Counter™ —</p>
+    <div id="certificate" class="hidden">
+      <h2>🎓 Useless Palmistry Certificate 🎓</h2>
+      <p id="certName"></p>
+      <p id="certLines"></p>
+      <p id="certFortune"></p>
+      <p id="certFact"></p>
+      <p style="font-style: italic;">This certificate is completely fake. Do not frame it. Or do.</p>
+    </div>
   </div>
 
   <script src="script.js"></script>

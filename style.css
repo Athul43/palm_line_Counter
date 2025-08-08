@@ -1,44 +1,95 @@
 body {
-  font-family: 'Comic Sans MS', cursive;
-  background: #ffe;
-  text-align: center;
   margin: 0;
-  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #7f00ff, #e100ff);
+  color: white;
+  text-align: center;
+  padding: 40px 10px;
 }
 
 .container {
   max-width: 600px;
   margin: auto;
-  background: #fff0f5;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 10px #aaa;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
-#imagePreview img {
-  margin-top: 15px;
-  max-width: 100%;
-  border: 2px dashed #999;
-  padding: 5px;
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #ffe1f0;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  background: #ff2a68;
+  color: white;
+  padding: 12px 25px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+#imageWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+#uploadedImage {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+#scanner {
+  position: relative;
+  overflow: hidden;
   border-radius: 10px;
 }
 
-button {
-  padding: 10px 20px;
-  margin-top: 15px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 8px;
-  border: none;
-  background-color: #ff69b4;
-  color: white;
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: scan 3s linear forwards;
+  z-index: 1;
+}
+
+@keyframes scan {
+  0% { top: -100%; }
+  100% { top: 100%; }
 }
 
 .hidden {
   display: none;
 }
 
-#uselessStats ul li {
-  margin: 8px 0;
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #d10063;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   font-size: 16px;
+}
+
+#certificate {
+  margin-top: 30px;
+  background: white;
+  color: black;
+  padding: 30px;
+  border: 4px double #ff69b4;
+  border-radius: 20px;
 }
