@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Palm Line Counter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🖐️ Palm Line Counter</h1>
+    <p>Upload your palm and get a hilariously useless stat!</p>
+
+    <input type="file" id="upload" accept="image/*">
+    <div id="imagePreview"></div>
+
+    <button id="analyzeBtn">Start Analysis</button>
+
+    <div id="result" class="hidden">
+      <h2>📊 Useless Stat Report</h2>
+      <p id="lineCount"></p>
+      <p id="fortune"></p>
+      <button onclick="downloadCertificate()">Download Certificate</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

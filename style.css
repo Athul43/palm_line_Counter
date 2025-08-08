@@ -1,0 +1,44 @@
+body {
+  font-family: 'Comic Sans MS', cursive;
+  background: #ffe;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff0f5;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px #aaa;
+}
+
+#imagePreview img {
+  margin-top: 15px;
+  max-width: 100%;
+  border: 2px dashed #999;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff69b4;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+#uselessStats ul li {
+  margin: 8px 0;
+  font-size: 16px;
+}
