@@ -11,6 +11,11 @@
 ### Team Members
 - Team Lead: Athul Titus- Mar Athanasius College of Engineering
 - Member 2: Sourav Anand - Mar Athanasius College of Engineering
+
+🏆 Achievements
+
+🥇 Won 1st Place (Best Project Award) at the ThinkerHub “Useless Projects” Hackathon – Mar Athanasius College of Engineering.
+Project: Thel Palmline Counter — recognized for its creativity, humor, and absolute uselessness that made perfect sense!
   
 
 ### Project Description
